@@ -1,0 +1,40 @@
+#macro (paginate $pagination $url $param)
+<div id="pagination" class="row-fluid">
+  <div class="span4">
+    <div id="table_report_info" class="dataTables_info">
+                共 $pagination.count 条记录, 显示第 $pagination.startIndexShow 到 $pagination.endIndexShow 条记录
+    </div>
+  </div>
+  <div class="span8">
+    <div class="dataTables_paginate paging_bootstrap pagination">
+      <ul>
+        <li class="prev">
+          <a href="$!{url}?pageNumber=${pagination.firstPage}#if($param)&${param}#{end}"><i class="icon-double-angle-left"></i></a>
+        </li>
+        <li class="prev">
+          <a href="$!{url}?pageNumber=${pagination.previos}#if($param)&${param}#{end}"><i class="icon-angle-left"></i></a>
+        </li>
+        #foreach($item in $pagination.visiblePage)
+          #if($item == $pagination.pageNumber)
+          <li class="active">
+          #else
+          <li>
+          #end
+          #if($item)
+            #set($pageIndex=$item + 1)
+        <a href="$!{url}?pageNumber=${item}#if($param)&${param}#{end}">$pageIndex</a>
+          #else
+        <a href="javascript:void(0);">...</a>
+          #end
+        #end
+        <li class="next">
+          <a href="$!{url}?pageNumber=$pagination.next#if($param)&${param}#{end}"><i class="icon-angle-right"></i></a>
+        </li>
+        <li class="next">
+          <a href="$!{url}?pageNumber=$pagination.lastPage#if($param)&${param}#{end}"><i class="icon-double-angle-right"></i></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+#end
